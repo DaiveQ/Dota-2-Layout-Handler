@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.23)
 
 set(QT_INSTALL_PATH D:/pkg/Qt/6.3.1/mingw_64)
 
-include("cmake/Huntergate.cmake")
+include("cmake/HunterGate.cmake")
 HunterGate(
         URL "https://github.com/cpp-pm/hunter/archive/v0.23.297.tar.gz"
         SHA1 "3319fe6a3b08090df7df98dee75134d68e2ef5a3"
