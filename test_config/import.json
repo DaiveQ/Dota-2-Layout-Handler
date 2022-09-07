@@ -1,0 +1,78 @@
+{
+	"version": 3,
+	"configs":
+	[
+		{
+			"config_name": "Import Layout",
+			"categories":
+			[
+				{
+					"category_name": "First",
+					"x_position": 849.565247,
+					"y_position": 0.000000,
+					"width": 323.478271,
+					"height": 374.782623,
+					"hero_ids":
+					[
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				},
+				{
+					"category_name": "Second",
+					"x_position": 405.217407,
+					"y_position": 0.000000,
+					"width": 438.260864,
+					"height": 374.782623,
+					"hero_ids":
+					[
+						2,
+						3,
+						4,
+						5,
+						6
+					]
+				}
+			]
+		},
+		{
+			"config_name": "Import Layout 2",
+			"categories":
+			[
+				{
+					"category_name": "First 2",
+					"x_position": 849.565247,
+					"y_position": 0.000000,
+					"width": 323.478271,
+					"height": 374.782623,
+					"hero_ids":
+					[
+						3,
+						4,
+						5,
+						6,
+						7
+					]
+				},
+				{
+					"category_name": "Second 2",
+					"x_position": 405.217407,
+					"y_position": 0.000000,
+					"width": 438.260864,
+					"height": 374.782623,
+					"hero_ids":
+					[
+						4,
+						5,
+						6,
+						7,
+						8
+					]
+				}
+			]
+		}
+	]
+}
