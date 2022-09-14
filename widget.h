@@ -12,6 +12,8 @@
 #include <QWidget>
 
 // TODO: move ALL transfer queue logic to d2_layout_handler as originally intended
+#include "d2_layout.h"
+
 
 class Widget : public QWidget {
 Q_OBJECT
@@ -25,6 +27,9 @@ private:
 
 	QListWidget *importList;
 	QListWidget *exportList;
+
+	D2Layout *importConfig;
+	D2Layout *exportConfig;
 
 	// TODO: these are also part of transfer queue layout and should take string instead
 	bool addLayoutToTransferQueue(QListWidgetItem *item);

@@ -40,11 +40,11 @@ Widget::Widget(QWidget *parent) : QWidget(parent) {
 
 	// TODO: TEMP
 	// TODO: Allow file selection
-	D2Layout importConfig("test_config/import.json");
-	D2Layout exportConfig("test_config/export.json");
+	importConfig = new D2Layout("test_config/import.json");
+	exportConfig = new D2Layout("test_config/export.json");
 
-	populateQListWidget(importList, importConfig.getLayoutNames());
-	populateQListWidget(exportList, exportConfig.getLayoutNames());
+	populateQListWidget(importList, importConfig->getLayoutNames());
+	populateQListWidget(exportList, exportConfig->getLayoutNames());
 
 	// transfer options
 	auto *transferOptionsQVBoxL = new QVBoxLayout;
