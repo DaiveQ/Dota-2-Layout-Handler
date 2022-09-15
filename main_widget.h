@@ -11,43 +11,44 @@
 #include <QPushButton>
 #include <QWidget>
 
-// TODO: move ALL transfer queue logic to d2_layout_handler as originally intended
-#include "d2_layout.h"
+// TODO: mark everything everywhere as const as possible
+#include "d2_layout_handler.h"
 
 
-class Widget : public QWidget {
-Q_OBJECT
+class MainWidget : public QWidget {
+	Q_OBJECT
 private:
+	D2LayoutHandler *d2LayoutHandler;
+
 	const QColor greyedOutBGColor = QColor(0xE5E5E5);
 	const QColor greyedOutFGColor = QColor(0x747474);
 
 	static void populateQListWidget(QListWidget *list, std::vector<std::string> strings);
 
-	std::vector<std::string> transferQueue;
-
 	QListWidget *importList;
 	QListWidget *exportList;
 
-	D2Layout *importConfig;
-	D2Layout *exportConfig;
-
-	// TODO: these are also part of transfer queue layout and should take string instead
-	bool addLayoutToTransferQueue(QListWidgetItem *item);
-	void removeLayoutFromTransferQueue(QListWidgetItem *item);
-
 	void addQueuedLayoutToExportList(QListWidgetItem *item);
+
 	void removeLayoutFromExportList(QListWidgetItem *item);
 
+	// TODO: Refactor to remove?
+	bool addLayoutToTransferQueue(QListWidgetItem *item);
+
+	void removeLayoutFromTransferQueue(QListWidgetItem *item);
 
 public:
-	Widget(QWidget *parent = nullptr);
+	explicit MainWidget(D2LayoutHandler *d2LayoutHandler, QWidget *parent = nullptr);
 
-	~Widget();
+	~MainWidget();
 
-private slots:
+private
+	slots:
 
-	void queueTransfer();
+			void queueTransfer();
+
 	void unqueueTransfer();
+
 	void commitChanges();
 };
 

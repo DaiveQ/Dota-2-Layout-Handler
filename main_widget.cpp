@@ -1,10 +1,13 @@
-#include "widget.h"
+#include "main_widget.h"
 
 #include "d2_layout.h" // TODO: Don't include this. Only include d2_layout_handler.h
 
 // TODO: Move logic to generate window to functions and allow for reloading (after layout set)
 
-Widget::Widget(QWidget *parent) : QWidget(parent) {
+
+MainWidget::MainWidget(D2LayoutHandler* d2LayoutHandler, QWidget *parent) : QWidget(parent) {
+	this->d2LayoutHandler = d2LayoutHandler;
+
 	/*
 	 *  (import list) (transfer options) (export list)
 	 *
@@ -18,15 +21,14 @@ Widget::Widget(QWidget *parent) : QWidget(parent) {
 	 * ------------------------------------------------
 	*/
 
-	setWindowTitle("Dota 2 Layout Handler");
 
+	setWindowTitle("Dota 2 Layout Handler");
 
 	auto *mainQVBoxL = new QVBoxLayout(this);
 
 	auto *transferManagementPanel = new QHBoxLayout;
 
 	mainQVBoxL->addLayout(transferManagementPanel);
-
 
 	// commit changes button
 	auto *commitBtn = new QPushButton;
@@ -38,13 +40,8 @@ Widget::Widget(QWidget *parent) : QWidget(parent) {
 	importList = new QListWidget;
 	exportList = new QListWidget;
 
-	// TODO: TEMP
-	// TODO: Allow file selection
-	importConfig = new D2Layout("test_config/import.json");
-	exportConfig = new D2Layout("test_config/export.json");
-
-	populateQListWidget(importList, importConfig->getLayoutNames());
-	populateQListWidget(exportList, exportConfig->getLayoutNames());
+	populateQListWidget(importList, this->d2LayoutHandler->getImportLayoutNames());
+	populateQListWidget(exportList, this->d2LayoutHandler->getExportLayoutNames());
 
 	// transfer options
 	auto *transferOptionsQVBoxL = new QVBoxLayout;
@@ -72,10 +69,12 @@ Widget::Widget(QWidget *parent) : QWidget(parent) {
 }
 
 
-Widget::~Widget() {
+MainWidget::~MainWidget() {
+	// TODO: free whatever else needs to be free (read docs)
+	free(d2LayoutHandler);
 }
 
-void Widget::populateQListWidget(QListWidget *list, std::vector<std::string> strings) {
+void MainWidget::populateQListWidget(QListWidget *list, std::vector<std::string> strings) {
 	for (const auto &string: strings) {
 		auto *item = new QListWidgetItem;
 		item->setText(string.c_str());
@@ -83,21 +82,12 @@ void Widget::populateQListWidget(QListWidget *list, std::vector<std::string> str
 	}
 }
 
-bool Widget::addLayoutToTransferQueue(QListWidgetItem *item) {
-	std::string configName = item->text().toStdString();
-
-	for (const auto &queueItemConfigName: transferQueue) {
-		if (configName == queueItemConfigName) {
-			return false;
-		}
-	}
-
-	transferQueue.emplace_back(configName);
-	return true;
-
+bool MainWidget::addLayoutToTransferQueue(QListWidgetItem *item) {
+	std::string layoutName = item->text().toStdString();
+	return d2LayoutHandler->addLayoutToTransferQueue(layoutName);
 }
 
-void Widget::addQueuedLayoutToExportList(QListWidgetItem *item) {
+void MainWidget::addQueuedLayoutToExportList(QListWidgetItem *item) {
 	auto *queuedLayout = new QListWidgetItem;
 	queuedLayout->setText(item->text());
 	queuedLayout->setForeground(greyedOutFGColor);
@@ -106,7 +96,7 @@ void Widget::addQueuedLayoutToExportList(QListWidgetItem *item) {
 }
 
 
-void Widget::queueTransfer() {
+void MainWidget::queueTransfer() {
 	// I can't seem to select multiple items, but it should be handled regardless
 	auto itemList = importList->selectedItems();
 	for (auto *item: itemList) {
@@ -116,25 +106,17 @@ void Widget::queueTransfer() {
 	}
 }
 
-void Widget::removeLayoutFromTransferQueue(QListWidgetItem *item) {
-	std::string configName = item->text().toStdString();
-
-	for (auto it = begin(transferQueue); it != end(transferQueue); it++) {
-		if (configName == *it) {
-			transferQueue.erase(it);
-			return;
-		}
-	}
-
-	throw std::runtime_error("attempt to remove invalid layout");
+void MainWidget::removeLayoutFromTransferQueue(QListWidgetItem *item) {
+	std::string layoutName = item->text().toStdString();
+	d2LayoutHandler->removeLayoutFromTransferQueue(layoutName);
 }
 
 // does this even do anything?
-void Widget::removeLayoutFromExportList(QListWidgetItem *item) {
+void MainWidget::removeLayoutFromExportList(QListWidgetItem *item) {
 	exportList->removeItemWidget(item);
 }
 
-void Widget::unqueueTransfer() {
+void MainWidget::unqueueTransfer() {
 	auto itemList = exportList->selectedItems();
 	for (auto *item: itemList) {
 		// TODO: Find better way to check/keep track than color
@@ -147,9 +129,7 @@ void Widget::unqueueTransfer() {
 	}
 }
 
-void Widget::commitChanges() {
-	// TODO: transfer layouts in transferQueue
-	// TODO: backup before transferring layouts
-	// TODO: reload window with updated changes (change by reading config files, not based on logic)
+void MainWidget::commitChanges() {
+	d2LayoutHandler->commitChanges();
 }
 

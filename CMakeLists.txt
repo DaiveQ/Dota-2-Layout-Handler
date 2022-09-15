@@ -10,7 +10,7 @@ HunterGate(
 
 project(Dota_2_Layout_Handler)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
@@ -26,7 +26,7 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(Dota_2_Layout_Handler main.cpp widget.cpp d2_layout_handler.cpp d2_layout.cpp)
+add_executable(Dota_2_Layout_Handler main.cpp main_widget.cpp d2_layout_handler.cpp d2_layout.cpp)
 target_link_libraries(Dota_2_Layout_Handler
         Qt::Core
         Qt::Gui
