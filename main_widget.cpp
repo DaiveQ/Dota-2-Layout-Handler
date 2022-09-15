@@ -1,9 +1,6 @@
 #include "main_widget.h"
 
-#include "d2_layout.h" // TODO: Don't include this. Only include d2_layout_handler.h
-
 // TODO: Move logic to generate window to functions and allow for reloading (after layout set)
-
 
 MainWidget::MainWidget(D2LayoutHandler* d2LayoutHandler, QWidget *parent) : QWidget(parent) {
 	this->d2LayoutHandler = d2LayoutHandler;
@@ -74,7 +71,7 @@ MainWidget::~MainWidget() {
 	free(d2LayoutHandler);
 }
 
-void MainWidget::populateQListWidget(QListWidget *list, std::vector<std::string> strings) {
+void MainWidget::populateQListWidget(QListWidget *list, const std::vector<std::string>& strings) {
 	for (const auto &string: strings) {
 		auto *item = new QListWidgetItem;
 		item->setText(string.c_str());

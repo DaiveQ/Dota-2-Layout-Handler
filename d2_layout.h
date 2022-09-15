@@ -17,9 +17,9 @@ private:
 	std::filesystem::path path;
 
 public:
-	explicit D2Layout(const std::string& path);
+	explicit D2Layout(const std::filesystem::path path);
 	[[nodiscard]] std::vector<std::string> getLayoutNames() const;
-	Json::Value getLayout(std::string layoutName) const;
+	Json::Value getLayout(const std::string& layoutName) const;
 	void addLayout(const Json::Value& layout);
 
 	bool backupFile();

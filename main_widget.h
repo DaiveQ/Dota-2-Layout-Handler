@@ -11,19 +11,18 @@
 #include <QPushButton>
 #include <QWidget>
 
-// TODO: mark everything everywhere as const as possible
 #include "d2_layout_handler.h"
 
 
 class MainWidget : public QWidget {
-	Q_OBJECT
+Q_OBJECT
 private:
 	D2LayoutHandler *d2LayoutHandler;
 
 	const QColor greyedOutBGColor = QColor(0xE5E5E5);
 	const QColor greyedOutFGColor = QColor(0x747474);
 
-	static void populateQListWidget(QListWidget *list, std::vector<std::string> strings);
+	static void populateQListWidget(QListWidget *list, const std::vector<std::string>& strings);
 
 	QListWidget *importList;
 	QListWidget *exportList;
@@ -45,7 +44,7 @@ public:
 private
 	slots:
 
-			void queueTransfer();
+	void queueTransfer();
 
 	void unqueueTransfer();
 

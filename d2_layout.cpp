@@ -1,7 +1,7 @@
 #include "d2_layout.h"
 
-D2Layout::D2Layout(const std::string& path) {
-	this->path = std::filesystem::path(path);
+D2Layout::D2Layout(std::filesystem::path path) {
+	this->path = path;
 	std::ifstream config(path);
 	config >> jsonData;
 
@@ -24,7 +24,7 @@ std::vector<std::string> D2Layout::getLayoutNames() const {
 	return layoutNames;
 }
 
-Json::Value D2Layout::getLayout(std::string layoutName) const {
+Json::Value D2Layout::getLayout(const std::string& layoutName) const {
 	// TODO: Perhaps can change to not use index by using enhanced for loops if jsoncpp implements it
 	for(Json::ArrayIndex i = 0; i < layoutCount; i++) {
 		if (layoutName == jsonData["configs"][i]["config_name"].asString()) {
