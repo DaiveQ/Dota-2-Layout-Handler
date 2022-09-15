@@ -6,10 +6,14 @@ An easy way to transfer Dota 2 Layouts (post 2019 Summer Scrub update)
 
 TODO: Add screenshot of program
 
-The default location of the layout file should be `C:/Program Files/Steam/userdata/*YOURUSERID*/570/remote/cfg/hero_grid_config.json`
+The default location of the layout file should be\
+Windows: `C:/Program Files/Steam/userdata/*YOURUSERID*/570/remote/cfg/hero_grid_config.json`\
+Linux: `$HOME/.local/share/Steam/userdata/*YOURUSERID*/570/remote/cfg/hero_grid_config.json`
 
 Program will automatically backup files prior to modifications
 
 # Building
-jsoncpp is included using hunter while Qt isn't.\
-CMAKE_PREFIX_PATH reflects my personal Qt path. It can be modified or deleted based on your personal setup.
+Project is built using CMake and currently requires Qt6 to be linked manually.\
+This can be done by modifying `QT6_INSTALL_PATH` in CMakeLists.txt, or any other CMake supported way
+
+jsoncpp will automatically be downloaded and linked by HunterGate and CMake.
