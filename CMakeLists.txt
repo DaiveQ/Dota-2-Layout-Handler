@@ -26,7 +26,14 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(Dota_2_Layout_Handler main.cpp main_widget.cpp d2_layout_handler.cpp d2_layout.cpp)
+add_executable(
+        Dota_2_Layout_Handler
+        main.cpp
+        transfer_widget.cpp
+        d2_layout_handler.cpp
+        d2_layout.cpp
+        file_selector_widget.cpp
+        main_widget.cpp)
 target_link_libraries(Dota_2_Layout_Handler
         Qt::Core
         Qt::Gui
