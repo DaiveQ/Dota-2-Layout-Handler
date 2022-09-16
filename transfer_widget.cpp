@@ -49,7 +49,6 @@ TransferWidget::TransferWidget(D2LayoutHandler* d2LayoutHandler, QWidget *parent
 	undoTransferBtn->setText("Undo Transfer");
 	transferOptionsQVBoxL->addWidget(undoTransferBtn);
 
-	// transfer panel handlers
 	connect(transferBtn, SIGNAL(clicked()), this, SLOT(queueTransfer()));
 	connect(undoTransferBtn, SIGNAL(clicked()), this, SLOT(unqueueTransfer()));
 	connect(importList, SIGNAL(itemDoubleClicked(QListWidgetItem * )),

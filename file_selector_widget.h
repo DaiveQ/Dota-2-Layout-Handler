@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QSignalMapper>
 #include <QStackedWidget>
 #include <QVBoxLayout>
 #include <QWidget>
@@ -23,6 +24,8 @@ public:
 	explicit FileSelectorWidget(QStackedWidget *parent);
 	~FileSelectorWidget();
 private slots:
+	void promptFileSelection(QLineEdit *pathQLineEdit);
+	void confirmSelection(QLineEdit *importFileQLineEdit, QLineEdit *exportFileQLineEdit);
 };
 
 

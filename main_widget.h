@@ -19,7 +19,7 @@
 #include "d2_layout_handler.h"
 
 
-class MainWidget : public QStackedWidget {
+class MainWidget : public QWidget {
 Q_OBJECT
 private:
 public:

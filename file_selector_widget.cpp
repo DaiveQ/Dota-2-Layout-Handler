@@ -11,29 +11,18 @@ FileSelectorWidget::FileSelectorWidget(QStackedWidget *parent) {
 	 * | [ path text box ************** ] [choose] |
 	 * |                                           |
 	 * | short helpful message about paths         |
-	 * |                            [confirm sele] |
-	 * |-------------------------------------------|
-	 * | short footer about project/repo link      |
+	 * |                       [confirm selection] |
 	 * ---------------------------------------------
 	 */
 
-	auto *mainQVBoxL = new QVBoxLayout(this);
 
-	auto *footerLabel = new QLabel;
-	footerLabel->setText("Created by DaiveQ: https://github.com/DaiveQ/Dota-2-Layout-Handler");
-
-	auto *fileSelectorWidget = new QVBoxLayout;
-
-	mainQVBoxL->addLayout(fileSelectorWidget);
-	mainQVBoxL->addWidget(footerLabel);
+	auto *fileSelectorQVBoxL = new QVBoxLayout(this);
 
 	auto *importFileSelectorQHBoxL = new QHBoxLayout;
 	auto *exportFileSelectorQHBoxL = new QHBoxLayout;
-	auto *confirmQHBoxL = new QHBoxLayout;
 
-	fileSelectorWidget->addLayout(importFileSelectorQHBoxL);
-	fileSelectorWidget->addLayout(exportFileSelectorQHBoxL);
-	fileSelectorWidget->addLayout(confirmQHBoxL);
+	fileSelectorQVBoxL->addLayout(importFileSelectorQHBoxL);
+	fileSelectorQVBoxL->addLayout(exportFileSelectorQHBoxL);
 
 	auto *importFileQLineEdit = new QLineEdit;
 	importFileQLineEdit->setPlaceholderText("import config path");
@@ -53,9 +42,25 @@ FileSelectorWidget::FileSelectorWidget(QStackedWidget *parent) {
 	exportFileSelectorQHBoxL->addWidget(exportFileQLineEdit);
 	exportFileSelectorQHBoxL->addWidget(chooseExportFileBtn);
 
-	// TODO: add footer(?)
-	// TODO: add signal handlers for choose buttons
+	auto *confirmBtn = new QPushButton;
+	confirmBtn->setText("Confirm Selection");
+	fileSelectorQVBoxL->addWidget(confirmBtn, 0, Qt::AlignRight);
+
+	// using lambda expression as slot doesn't work with SIGNAL(clicked()) for some reason
+	// SIGNAL(clicked()) can easily be replaced by &QPushButton::clicked, but a custom
+	// implementation would be required to replace SIGNAL(itemDoubleClicked) with something
+	// similar, thus SIGNAL() will continue to be used in situations where it is not required
+	connect(chooseImportFileBtn, &QPushButton::clicked, this,
+	        [this, importFileQLineEdit]() { promptFileSelection(importFileQLineEdit); });
+	connect(chooseExportFileBtn, &QPushButton::clicked, this,
+	        [this, exportFileQLineEdit]() { promptFileSelection(exportFileQLineEdit); });
+	connect(confirmBtn, &QPushButton::clicked, this,
+	        [this, importFileQLineEdit, exportFileQLineEdit]() {
+		        confirmSelection(importFileQLineEdit, exportFileQLineEdit);
+	        });
+
 	// TODO: add labels for sections
+
 
 }
 
@@ -64,7 +69,21 @@ FileSelectorWidget::~FileSelectorWidget() {
 }
 
 void FileSelectorWidget::switchParentToTransferWidget(D2LayoutHandler *d2LayoutHandler) {
-	auto* transferWidget = new TransferWidget(d2LayoutHandler, parent);
+	auto *transferWidget = new TransferWidget(d2LayoutHandler, parent);
 	parent->addWidget(transferWidget);
 	parent->setCurrentIndex(parent->indexOf(transferWidget));
+}
+
+void FileSelectorWidget::promptFileSelection(QLineEdit *pathQLineEdit) {
+	QString currentPath = QString::fromStdString(std::filesystem::current_path().string());
+	pathQLineEdit->setText(
+			QFileDialog::getOpenFileName(this, tr("Open Layout Config"), currentPath, tr("Layout Config (*.json)")));
+	QFileDialog dialog(this);
+}
+
+void FileSelectorWidget::confirmSelection(QLineEdit *importFileQLineEdit, QLineEdit *exportFileQLineEdit) {
+	std::string importFilePath = importFileQLineEdit->text().toStdString();
+	std::string exportFilePath = exportFileQLineEdit->text().toStdString();
+	auto *d2LayoutHandler = new D2LayoutHandler(importFilePath, exportFilePath);
+	switchParentToTransferWidget(d2LayoutHandler);
 }
