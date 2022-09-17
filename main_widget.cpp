@@ -9,18 +9,16 @@ MainWidget::MainWidget(QWidget *parent) : QWidget(parent) {
 	 * |                               |
 	 * |                               |
 	 * |-------------------------------|
-	 * | footer with link to repo      |
-	 * ---------------------------------
 	 */
 	setWindowTitle("Dota 2 Layout Handler");
-	resize(600, 300);
+	resize(570, 250);
+	setMinimumSize(550,250);
 	auto *mainQVBoxLayout = new QVBoxLayout(this);
 	auto *mainStackedWidget = new QStackedWidget;
 	mainQVBoxLayout->addWidget(mainStackedWidget);
 	QWidget *fsWidget = new FileSelectorWidget(mainStackedWidget);
 	mainStackedWidget->addWidget(fsWidget);
 	mainStackedWidget->setCurrentIndex(mainStackedWidget->indexOf(fsWidget));
-	// TODO: add footer with fixed size and pin to bottom
 }
 
 

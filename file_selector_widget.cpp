@@ -21,14 +21,19 @@ FileSelectorWidget::FileSelectorWidget(QStackedWidget *parent) {
 	auto *importFileSelectorQHBoxL = new QHBoxLayout;
 	auto *exportFileSelectorQHBoxL = new QHBoxLayout;
 
+	auto *importFileLabel = new QLabel("Import layouts from:");
+	auto *exportFileLabel = new QLabel("Export layouts to:");
+
+	fileSelectorQVBoxL->addWidget(importFileLabel, 0, Qt::AlignLeft | Qt::AlignBottom);
 	fileSelectorQVBoxL->addLayout(importFileSelectorQHBoxL);
+	fileSelectorQVBoxL->addWidget(exportFileLabel, 0, Qt::AlignLeft | Qt::AlignBottom);
 	fileSelectorQVBoxL->addLayout(exportFileSelectorQHBoxL);
 
 	auto *importFileQLineEdit = new QLineEdit;
 	importFileQLineEdit->setPlaceholderText("import config path");
 
 	auto *chooseImportFileBtn = new QPushButton;
-	chooseImportFileBtn->setText("Choose");
+	chooseImportFileBtn->setText("Browse");
 
 	importFileSelectorQHBoxL->addWidget(importFileQLineEdit);
 	importFileSelectorQHBoxL->addWidget(chooseImportFileBtn);
@@ -37,10 +42,17 @@ FileSelectorWidget::FileSelectorWidget(QStackedWidget *parent) {
 	exportFileQLineEdit->setPlaceholderText("export config path");
 
 	auto *chooseExportFileBtn = new QPushButton;
-	chooseExportFileBtn->setText("Choose");
+	chooseExportFileBtn->setText("Browse");
 
 	exportFileSelectorQHBoxL->addWidget(exportFileQLineEdit);
 	exportFileSelectorQHBoxL->addWidget(chooseExportFileBtn);
+
+	auto *configPathHint = new QLabel;
+	configPathHint->setText("The default location of the layout file should be\n"
+	                        "Windows: C:/Program Files/Steam/userdata/*YOURUSERID*/570/remote/cfg/hero_grid_config.json\n"
+	                        "Linux: $HOME/.local/share/Steam/userdata/*YOURUSERID*/570/remote/cfg/hero_grid_config.json");
+
+	fileSelectorQVBoxL->addWidget(configPathHint, 0, Qt::AlignLeft);
 
 	auto *confirmBtn = new QPushButton;
 	confirmBtn->setText("Confirm Selection");
@@ -58,8 +70,6 @@ FileSelectorWidget::FileSelectorWidget(QStackedWidget *parent) {
 	        [this, importFileQLineEdit, exportFileQLineEdit]() {
 		        confirmSelection(importFileQLineEdit, exportFileQLineEdit);
 	        });
-
-	// TODO: add labels for sections
 
 
 }
