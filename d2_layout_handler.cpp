@@ -2,8 +2,33 @@
 
 D2LayoutHandler::D2LayoutHandler(const std::filesystem::path &importConfigPath,
                                  const std::filesystem::path &exportConfigPath) {
-	importConfig = new D2Layout(importConfigPath);
-	exportConfig = new D2Layout(exportConfigPath);
+	// file selection error handling
+	if (!std::filesystem::exists(importConfigPath) || !std::filesystem::exists(exportConfigPath)) {
+		if (std::filesystem::exists(importConfigPath)) { // export file doesn't exist
+			throw std::runtime_error("export config does not exist");
+		} else if (std::filesystem::exists(exportConfigPath)) { // import file doesn't exist
+			throw std::runtime_error("import config does not exist");
+		} else { // both don't exist
+			throw std::runtime_error("import and export config don't exist");
+		}
+	}
+
+	// same import and export file handling
+	if (std::filesystem::equivalent(importConfigPath, exportConfigPath)) {
+		throw std::runtime_error("config paths cannot be the same");
+	}
+
+	// json parsing error handling
+	try {
+		importConfig = new D2Layout(importConfigPath);
+	} catch (Json::RuntimeError &jsonRuntimeError) {
+		throw std::runtime_error("could not parse json from import config");
+	}
+	try {
+		exportConfig = new D2Layout(exportConfigPath);
+	} catch (Json::RuntimeError &jsonRuntimeError) {
+		throw std::runtime_error("could not parse json from export config");
+	}
 }
 
 std::vector<std::string> D2LayoutHandler::getImportLayoutNames() const {

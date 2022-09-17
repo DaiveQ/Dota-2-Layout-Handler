@@ -1,6 +1,7 @@
 #ifndef DOTA_2_LAYOUT_HANDLER_D2_LAYOUT_HANDLER_H
 #define DOTA_2_LAYOUT_HANDLER_D2_LAYOUT_HANDLER_H
 
+#include <exception>
 #include <string>
 #include <vector>
 

@@ -94,6 +94,16 @@ void FileSelectorWidget::promptFileSelection(QLineEdit *pathQLineEdit) {
 void FileSelectorWidget::confirmSelection(QLineEdit *importFileQLineEdit, QLineEdit *exportFileQLineEdit) {
 	std::string importFilePath = importFileQLineEdit->text().toStdString();
 	std::string exportFilePath = exportFileQLineEdit->text().toStdString();
-	auto *d2LayoutHandler = new D2LayoutHandler(importFilePath, exportFilePath);
+	D2LayoutHandler* d2LayoutHandler;
+	try {
+		d2LayoutHandler = new D2LayoutHandler(importFilePath, exportFilePath);
+	} catch (std::runtime_error &runtimeError) {
+		QMessageBox errorMsgBox;
+		QString errorMsg = "Error: ";
+		errorMsg += runtimeError.what();
+		errorMsgBox.critical(this, "Error", errorMsg);
+//		errorMsgBox.setFixedSize(500,200);
+		return;
+	}
 	switchParentToTransferWidget(d2LayoutHandler);
 }
