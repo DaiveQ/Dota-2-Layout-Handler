@@ -6,11 +6,11 @@ D2LayoutHandler::D2LayoutHandler(const std::filesystem::path &importConfigPath,
 	exportConfig = new D2Layout(exportConfigPath);
 }
 
-std::vector<std::string> D2LayoutHandler::getImportLayoutNames() {
+std::vector<std::string> D2LayoutHandler::getImportLayoutNames() const {
 	return importConfig->getLayoutNames();
 }
 
-std::vector<std::string> D2LayoutHandler::getExportLayoutNames() {
+std::vector<std::string> D2LayoutHandler::getExportLayoutNames() const {
 	return exportConfig->getLayoutNames();
 }
 

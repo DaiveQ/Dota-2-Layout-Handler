@@ -17,13 +17,17 @@ private:
 	std::filesystem::path path;
 
 public:
-	explicit D2Layout(const std::filesystem::path path);
-	[[nodiscard]] std::vector<std::string> getLayoutNames() const;
-	Json::Value getLayout(const std::string& layoutName) const;
-	void addLayout(const Json::Value& layout);
+	explicit D2Layout(std::filesystem::path path);
 
-	bool backupFile();
-	bool flushBuffer();
+	[[nodiscard]] std::vector<std::string> getLayoutNames() const;
+
+	[[nodiscard]] Json::Value getLayout(const std::string &layoutName) const;
+
+	void addLayout(const Json::Value &layout);
+
+	[[nodiscard]] bool backupFile() const;
+
+	[[nodiscard]] bool flushBuffer() const;
 };
 
 #endif //DOTA_2_LAYOUT_HANDLER_D2_LAYOUT_H

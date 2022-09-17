@@ -16,9 +16,9 @@ private:
 public:
 	D2LayoutHandler(const std::filesystem::path &importConfigPath, const std::filesystem::path &exportConfigPath);
 
-	std::vector<std::string> getImportLayoutNames();
+	[[nodiscard]] std::vector<std::string> getImportLayoutNames() const;
 
-	std::vector<std::string> getExportLayoutNames();
+	[[nodiscard]] std::vector<std::string> getExportLayoutNames() const;
 
 	bool addLayoutToTransferQueue(const std::string &layoutName);
 

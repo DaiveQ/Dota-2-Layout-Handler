@@ -8,7 +8,7 @@ D2Layout::D2Layout(std::filesystem::path path) {
 	int version = jsonData["version"].asInt();
 	if (version != SUPPORTED_VERSION) {
 		throw std::logic_error("unsupported version " + std::to_string(version)
-		                         + " when only version 3 is supported");
+		                       + " when only version 3 is supported");
 	}
 	layoutCount = jsonData["configs"].size();
 }
@@ -24,9 +24,9 @@ std::vector<std::string> D2Layout::getLayoutNames() const {
 	return layoutNames;
 }
 
-Json::Value D2Layout::getLayout(const std::string& layoutName) const {
+Json::Value D2Layout::getLayout(const std::string &layoutName) const {
 	// TODO: Perhaps can change to not use index by using enhanced for loops if jsoncpp implements it
-	for(Json::ArrayIndex i = 0; i < layoutCount; i++) {
+	for (Json::ArrayIndex i = 0; i < layoutCount; i++) {
 		if (layoutName == jsonData["configs"][i]["config_name"].asString()) {
 			return jsonData["configs"][i];
 		}
@@ -34,11 +34,11 @@ Json::Value D2Layout::getLayout(const std::string& layoutName) const {
 	throw std::logic_error("invalid layout to get");
 }
 
-void D2Layout::addLayout(const Json::Value& layout) {
+void D2Layout::addLayout(const Json::Value &layout) {
 	jsonData["configs"].append(layout);
 }
 
-bool D2Layout::backupFile() {
+bool D2Layout::backupFile() const {
 	// TODO: Implement checking and return a meaningful bool
 	// or throw error and handle it
 	// currently always a success
@@ -67,7 +67,7 @@ bool D2Layout::backupFile() {
 }
 
 // returns false if badbit or failbit is set after closing
-bool D2Layout::flushBuffer() {
+bool D2Layout::flushBuffer() const {
 	std::ofstream config(path);
 
 	Json::StreamWriterBuilder builder;
