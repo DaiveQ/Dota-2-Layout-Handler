@@ -98,11 +98,9 @@ void FileSelectorWidget::confirmSelection(QLineEdit *importFileQLineEdit, QLineE
 	try {
 		d2LayoutHandler = new D2LayoutHandler(importFilePath, exportFilePath);
 	} catch (std::runtime_error &runtimeError) {
-		QMessageBox errorMsgBox;
 		QString errorMsg = "Error: ";
 		errorMsg += runtimeError.what();
-		errorMsgBox.critical(this, "Error", errorMsg);
-//		errorMsgBox.setFixedSize(500,200);
+		QMessageBox::critical(this, "Error", errorMsg);
 		return;
 	}
 	switchParentToTransferWidget(d2LayoutHandler);
