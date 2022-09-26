@@ -25,7 +25,7 @@ public:
 
 	void removeLayoutFromTransferQueue(const std::string &layoutName);
 
-	void commitChanges();
+	bool commitChanges();
 
 };
 

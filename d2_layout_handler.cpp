@@ -61,7 +61,7 @@ void D2LayoutHandler::removeLayoutFromTransferQueue(const std::string &layoutNam
 
 }
 
-void D2LayoutHandler::commitChanges() {
+bool D2LayoutHandler::commitChanges() {
 	// TODO: handle transfer with no layouts queued
 	// TODO: handle transfers with conflicting names (ask user to rename)
 	//     TODO: let user rename in general
@@ -75,6 +75,7 @@ void D2LayoutHandler::commitChanges() {
 
 	exportConfig->flushBuffer();
 
-	// TODO: reload window with updated changes (change by reading config files, not based on logic)
+	// TODO: Actually add error checking
+	return true;
 
 }
