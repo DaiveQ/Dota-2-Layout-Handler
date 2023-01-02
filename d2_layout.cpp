@@ -62,8 +62,12 @@ bool D2Layout::backupFile() const {
 
 	std::filesystem::copy(path, backupPath);
 
-	// TODO: Error check
-	return true;
+    if (std::filesystem::exists(backupPath)) {
+        return true;
+    } else {
+        return false;
+    }
+	// TODO: Add more error checking (contents)
 }
 
 // returns false if badbit or failbit is set after closing

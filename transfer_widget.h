@@ -28,6 +28,8 @@ private:
 	QListWidget *importList;
 	QListWidget *exportList;
 
+    QPushButton *commitBtn;
+
 	void addQueuedLayoutToExportList(QListWidgetItem *item);
 
 	void removeLayoutFromExportList(QListWidgetItem *item);

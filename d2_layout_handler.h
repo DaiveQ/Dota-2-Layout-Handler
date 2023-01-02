@@ -5,6 +5,9 @@
 #include <string>
 #include <vector>
 
+#include <QApplication>
+#include <QMessageBox>
+
 #include "d2_layout.h"
 
 class D2LayoutHandler {
@@ -25,7 +28,7 @@ public:
 
 	void removeLayoutFromTransferQueue(const std::string &layoutName);
 
-	void commitChanges();
+	void commitChanges(QWidget *parent);
 
 };
 

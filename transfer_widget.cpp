@@ -26,7 +26,7 @@ TransferWidget::TransferWidget(D2LayoutHandler* d2LayoutHandler, QWidget *parent
 	mainQVBoxL->addLayout(transferManagementPanel);
 
 	// commit changes button
-	auto *commitBtn = new QPushButton;
+	commitBtn = new QPushButton;
 	commitBtn->setText("Commit Changes");
 	mainQVBoxL->addWidget(commitBtn, 0, Qt::AlignRight);
 	connect(commitBtn, SIGNAL(clicked()), this, SLOT(commitChanges()));
@@ -124,6 +124,8 @@ void TransferWidget::unqueueTransfer() {
 }
 
 void TransferWidget::commitChanges() {
-	d2LayoutHandler->commitChanges();
+    commitBtn->setEnabled(false);
+	d2LayoutHandler->commitChanges(this);
+    commitBtn->setEnabled(true);
 }
 
