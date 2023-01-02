@@ -64,7 +64,7 @@ void D2LayoutHandler::removeLayoutFromTransferQueue(const std::string &layoutNam
 void D2LayoutHandler::commitChanges(QWidget *parent) {
     // TODO: handle transfer with no layouts queued
     // TODO: handle transfers with conflicting names (ask user to rename)
-    //     TODO: let user rename in general
+    // TODO: let user rename in general
 
     if (!exportConfig->backupFile()) {
         auto reply = QMessageBox::question(parent, "Backup not made",
@@ -75,7 +75,6 @@ void D2LayoutHandler::commitChanges(QWidget *parent) {
             return;
         }
     }
-
 
     for (const auto &layoutName: transferQueue) {
         exportConfig->addLayout(importConfig->getLayout(layoutName));
@@ -91,5 +90,4 @@ void D2LayoutHandler::commitChanges(QWidget *parent) {
     QApplication::quit();
 
     // TODO: reload window with updated changes (change by reading config files, not based on logic)
-
 }
